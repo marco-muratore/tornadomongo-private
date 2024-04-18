@@ -2,6 +2,8 @@ import asyncio
 import logging
 import tornado.ioloop
 import tornado.web
+from healthcheck import TornadoHandler, EnvironmentDump
+
 import tornado.escape
 import tornado.autoreload
 from tornado.log import enable_pretty_logging
@@ -14,6 +16,12 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 import time
+
+def application_data():
+    return {"maintainer": "Michele",
+            "git_repo": "https://github.com/mialliedo/tornadomongo-private"}
+
+envdump = EnvironmentDump(application=application_data)
 
 
 def create_logger(name):
@@ -108,10 +116,12 @@ class MainHandler(tornado.web.RequestHandler):
             raise tornado.web.HTTPError(404)
 
 
+
 async def main():
     application = tornado.web.Application([
-        (r"/", MainHandler),
-        (r"/(?P<student_id>\w+)", MainHandler)
+        #(r"/", MainHandler),
+        #(r"/(?P<student_id>\w+)", MainHandler),
+        (r"/environment", TornadoHandler, dict(checker=envdump)),
     ], db=db, autoreload=True)
     application.listen(9000)
     await asyncio.Event().wait()
