@@ -26,4 +26,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: mialliedo/tornadomongo-private:latest
+          tags: ${{ github.repository }}:latest
