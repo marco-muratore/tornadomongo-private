@@ -27,5 +27,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: edotest.azurecr.io/${{ github.repository_owner }}/tornadomongo-private:latest
+          tags: edotest.azurecr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
           file: Dockerfile
