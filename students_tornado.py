@@ -119,11 +119,12 @@ class MainHandler(tornado.web.RequestHandler):
 
 async def main():
     application = tornado.web.Application([
-        #(r"/", MainHandler),
-        #(r"/(?P<student_id>\w+)", MainHandler),
-        (r"/environment", TornadoHandler, dict(checker=envdump)),
+        (r"/", MainHandler),
+        (r"/environment", TornadoHandler, dict(checker=envdump),
+        (r"/(?P<student_id>\w+)", MainHandler))
     ], db=db, autoreload=True)
     application.listen(9000)
+    logger.info("Server running ..")
     await asyncio.Event().wait()
 
 if __name__ == "__main__":
