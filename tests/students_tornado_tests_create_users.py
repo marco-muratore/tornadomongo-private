@@ -24,7 +24,7 @@ class TestCreateStudentsList(AsyncHTTPTestCase):
         return application
 
     def test_create_student(self):
-        with open('../db-schemas/students-objects.json', 'r') as f:
+        with open('db-schemas/students-objects.json', 'r') as f:
             data = json.load(f)
         for student in data['students']:
             print(student)
