@@ -1,0 +1,14 @@
+name: Image building and healthcheck with Postman
+
+on: [push]
+
+jobs:
+  lcv_tests_postman:
+    runs-on: ubuntu-latest
+    name: Healthcheck with Postman (using Newman)
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Healtchcheck with Newman test
+      id: hello
+      uses: ./
