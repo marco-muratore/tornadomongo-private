@@ -8,7 +8,7 @@ jobs:
     name: Healthcheck with Postman (using Newman)
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Healtcheck with Newman test
       id: hello
       uses: ./
