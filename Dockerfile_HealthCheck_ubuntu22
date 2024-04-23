@@ -1,8 +1,3 @@
-# Use an official Python runtime as a parent image
-#FROM --platform=linux/amd64 python:3.9
-#ARG BASE_IMAGE=python:3.9-bullseye
-
-#functioning one - Ubuntu 22.04
 ARG BASE_IMAGE=ubuntu:jammy-20231128
 
 FROM ${BASE_IMAGE}
@@ -35,7 +30,5 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 ADD entrypoint.sh /app
 RUN chmod +x /app/entrypoint.sh
-#ENV PYTHONPATH /app
 
 CMD ["/app/entrypoint.sh"]
-#CMD ["python", "students_tornado.py", "&","&&","sleep","10","&&","newman","run","https://api.postman.com/collections/718114-86993b77-21dd-4210-ae54-2630affd0537?access_key=PMAT-01HW2YHXHNF4XYZ3HZCG7E127Q"]
