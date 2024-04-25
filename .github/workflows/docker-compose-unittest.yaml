@@ -8,18 +8,18 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:3.6
+        image: mongo:7
         env:
-          MONGO_INITDB_ROOT_USERNAME: admin
-          MONGO_INITDB_ROOT_PASSWORD: admin
-          MONGO_INITDB_DATABASE: APP-DATABASE
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
+          #MONGO_INITDB_DATABASE: APP-DATABASE
         ports:
           - 27017:27017
-        options: >-
-          --health-cmd mongo
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        #options: >-
+        #  --health-cmd mongo
+        #  --health-interval 10s
+        #  --health-timeout 5s
+        #  --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
@@ -32,8 +32,8 @@ jobs:
           python-version: '3.9'
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python3 -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Test with Unittest
         run: |
-          python -m tornado.testing tests
+          python3 -m tornado.testing tests
