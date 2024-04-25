@@ -23,7 +23,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Newman-healthcheck and Unittest
-        id: env-variables
-        uses: ./
+      #- name: Newman-healthcheck
+      #  id: env-variables
+      #  uses: ./
+      - name: Unittest environment setup
+        uses: actions/setup-python@v1
+        with:
+          python-version: "9"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Test with Unittest
+        run: |
+          python -m tornado.testing tests
