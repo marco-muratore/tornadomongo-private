@@ -22,4 +22,4 @@ services:
       - mongo
       - tornadomongo
     command:
-      run https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=PMAT-01HWFE7107BW8K0Q817C3CKD9P
+      run https://api.postman.com/collections/718114-6a7cd7b7-b625-4ac1-91d0-ebde442dbb54?access_key=PMAT-01HWFS8K8YC8EM5VA2J3NT591Z
