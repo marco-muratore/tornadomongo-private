@@ -1,0 +1,41 @@
+name: Unittests with MongoDB
+
+on: [push]
+
+jobs:
+  build-mongo-custom:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and tag image
+        run: |
+          COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
+          docker build . -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:$COMMIT_SHA
+
+    services:
+      mongo:
+        image: mongo:7
+        restart: always
+        ports:
+          - 27017:27017
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
+
+      tornadomongo:
+        image: {{ github.repository_owner }}/${{ github.repository }}:$COMMIT_SHA
+        ports:
+          - 9000:9000
+
+      postman-newman:
+        image: postman/newman
+        depends_on:
+          - mongo
+          - tornadomongo
+        command:
+          run https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=PMAT-01HWFE7107BW8K0Q817C3CKD9P
+
+
