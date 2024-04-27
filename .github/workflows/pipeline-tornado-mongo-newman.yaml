@@ -52,7 +52,7 @@ jobs:
           kill -9 `lsof -i:9000 -t`
 
       - name: Docker Login
-        uses: azure/docker-login@v1
+        uses: azure/docker-login@v2
         with:
           login-server: ${{ secrets.AZURE_URL }}
           username: ${{ secrets.ACR_USERNAME }}
