@@ -28,7 +28,7 @@ WORKDIR /app
 RUN ls
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-ADD entrypoint.sh /app
-RUN chmod +x /app/entrypoint.sh
+ADD entrypoint-postman.sh /app
+RUN chmod +x /app/entrypoint-postman.sh
 
-CMD ["/app/entrypoint.sh"]
+CMD ["/app/entrypoint-postman.sh"]
