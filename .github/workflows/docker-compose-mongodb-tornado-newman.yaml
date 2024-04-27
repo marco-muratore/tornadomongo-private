@@ -1,4 +1,4 @@
-name: Unittests with MongoDB
+name: MongoDB Tornado and Newman
 
 on: [push]
 
