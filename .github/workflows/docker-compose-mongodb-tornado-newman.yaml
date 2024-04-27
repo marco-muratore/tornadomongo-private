@@ -13,12 +13,12 @@ jobs:
       - name: Build and tag image
         run: |
           COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          docker build . -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-test:$COMMIT_SHA
+          docker build -f Dockerfile-postman . -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-mongodb-tests:$COMMIT_SHA
 
       - name: Push image to GHCR
         run: |
           COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-test:$COMMIT_SHA
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-mongodb-tests:$COMMIT_SHA
         
 
     services:
@@ -31,13 +31,6 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: example
 
       tornadomongo:
-        image: ghcr.io/mialliedo/tornadomongo-private-postman-test:latest
+        image: ghcr.io/mialliedo/tornadomongo-private-postman-mongodb-tests:latest
         ports:
           - 9000:9000
-
-      postman-newman:
-        image: postman/newman
-        steps:
-          - run: run https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=PMAT-01HWFE7107BW8K0Q817C3CKD9P
-
-
