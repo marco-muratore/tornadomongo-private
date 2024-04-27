@@ -19,6 +19,11 @@ jobs:
         run: |
           COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
           docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-mongodb-tests:$COMMIT_SHA
+
+      - name: Run the image with tests
+        run: |
+          COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-mongodb-tests:$COMMIT_SHA
         
 
     services:
@@ -30,7 +35,7 @@ jobs:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example
 
-      tornadomongo:
-        image: ghcr.io/mialliedo/tornadomongo-private-postman-mongodb-tests:latest
-        ports:
-          - 9000:9000
+      #tornadomongo:
+      #  image: ghcr.io/mialliedo/tornadomongo-private-postman-mongodb-tests:latest
+      #  ports:
+      #    - 9000:9000
