@@ -23,7 +23,7 @@ jobs:
       - name: Run the image with tests
         run: |
           COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-mongodb-tests:$COMMIT_SHA
+          docker run ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-mongodb-tests:$COMMIT_SHA
         
 
     services:
