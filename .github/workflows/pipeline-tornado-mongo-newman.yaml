@@ -37,7 +37,16 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
-        
+
       - name: Install Newman dependency
         run: |
-          npm install -g newman          
+          npm install -g newman
+
+      - name: Run Tornado and Postman's tests
+        run: |
+          python3 students_tornado.py &
+          sleep 3
+          newman run https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=PMAT-01HWFE7107BW8K0Q817C3CKD9P
+          kill -9 `lsof -i:9000 -t`
+        env:
+          URI: mongodb://root:example@localhost:27017/
