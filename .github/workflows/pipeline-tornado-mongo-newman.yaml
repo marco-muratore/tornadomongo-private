@@ -27,6 +27,8 @@ jobs:
         uses: supercharge/mongodb-github-action@1.10.0
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
+          mongodb-username: root
+          mongodb-password: example
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -49,4 +51,5 @@ jobs:
           newman run https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=PMAT-01HWFE7107BW8K0Q817C3CKD9P
           kill -9 `lsof -i:9000 -t`
         env:
+          CI: true
           URI: mongodb://root:example@localhost:27017/
