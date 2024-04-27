@@ -13,7 +13,7 @@ jobs:
       - name: Build and tag image
         run: |
           COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          docker build -f Dockerfile-postman . -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-mongodb-tests:$COMMIT_SHA
+          docker build -f Dockerfile-postman . -t postman-mongodb-tests:$COMMIT_SHA
 
       #- name: Push image to GHCR
       #  run: |
@@ -23,7 +23,7 @@ jobs:
       - name: Run the image with tests
         run: |
           COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          docker run ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-postman-mongodb-tests:$COMMIT_SHA
+          docker run postman-mongodb-tests:$COMMIT_SHA
         
 
     services:
