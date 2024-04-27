@@ -5,17 +5,23 @@ on: [push] #, pull_request]
 
 jobs:
   mongodb-tornado-newman:
-    name: Start MongoDB Server v${{ matrix.mongodb-version }}
+    name: MongoDB v${{ matrix.mongodb-version }}-Python v${{ matrix.python-version }}-Node vv${{ matrix.node-version }}
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
         mongodb-version: ['7.0']#,'4.0', '4.2', '4.4', '5.0', '6.0']
         python-version: ['3.9']
+        node-version: ['18']
 
     steps:
-      - name: Checkout
+      - name: Git checkout
         uses: actions/checkout@v4
+
+      - name: Install Node JS ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
 
       - name: Start MongoDB ${{ matrix.mongodb-version }}
         uses: supercharge/mongodb-github-action@1.10.0
@@ -31,4 +37,3 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
-      
