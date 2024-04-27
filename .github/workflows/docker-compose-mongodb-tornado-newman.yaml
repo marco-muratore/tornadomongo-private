@@ -37,7 +37,7 @@ jobs:
 
       postman-newman:
         image: postman/newman
-        command:
+        run:
           run https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=PMAT-01HWFE7107BW8K0Q817C3CKD9P
 
 
