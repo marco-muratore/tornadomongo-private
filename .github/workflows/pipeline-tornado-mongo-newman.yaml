@@ -50,6 +50,22 @@ jobs:
           sleep 3
           newman run https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=PMAT-01HWFE7107BW8K0Q817C3CKD9P
           kill -9 `lsof -i:9000 -t`
+
+      - name: Docker Login
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.AZURE_URL }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and Push to ACR
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: edotest.azurecr.io/${{ github.repository }}:latest
+          file: Dockerfile_without_tests
+
+
         env:
           CI: true
           URI: mongodb://root:example@localhost:27017/
