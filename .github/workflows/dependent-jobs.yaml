@@ -8,6 +8,13 @@ jobs:
     # needs: build-and-push-test-image-on-acr
     name: MongoDB and Tornado
     runs-on: ubuntu-latest
+    steps:
+      - name: Docker Login
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.AZURE_URL }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
     services:
       mongo:
         image: mongo:7
@@ -22,14 +29,3 @@ jobs:
           - 9000:9000
         env:
           URI: mongodb://root:example@mongo:27017/
-    steps:
-      - name: Docker Login
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.AZURE_URL }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-      - uses: actions/checkout@master
-      - uses: matt-ball/newman-action@master
-        with:
-          collection: https://api.postman.com/collections/718114-6a7cd7b7-b625-4ac1-91d0-ebde442dbb54?access_key=PMAT-01HWFS8K8YC8EM5VA2J3NT591Z
