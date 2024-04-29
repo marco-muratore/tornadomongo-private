@@ -1,5 +1,3 @@
-version: '3.1'
-
 services:
 
   mongo:
@@ -17,9 +15,9 @@ services:
       - 9000:9000
 
   postman-newman:
-    image: postman/newman
+    image: newman-custom:0.0.1
     depends_on:
       - mongo
       - tornadomongo
-    command:
-      run https://api.postman.com/collections/718114-6a7cd7b7-b625-4ac1-91d0-ebde442dbb54?access_key=PMAT-01HWFS8K8YC8EM5VA2J3NT591Z
+#    command:
+#      run https://api.postman.com/collections/718114-6a7cd7b7-b625-4ac1-91d0-ebde442dbb54?access_key=PMAT-01HWFS8K8YC8EM5VA2J3NT591Z
