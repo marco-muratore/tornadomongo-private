@@ -8,9 +8,8 @@ on: [push] #, pull_request]
 jobs:
   build-and-push-test-image-on-dockerhub:
     runs-on: ubuntu-latest
+    name: Build and push test image on DockerHub
     steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Login to Docker Hub
@@ -26,7 +25,7 @@ jobs:
   mongodb-tornado-newman:
     # needs: build-and-push-test-image-on-acr
     needs: build-and-push-test-image-on-dockerhub
-    name: MongoDB and Tornado
+    name: Postman tests over MongoDB and Tornado
     runs-on: ubuntu-latest
     services:
       mongo:
@@ -50,10 +49,9 @@ jobs:
           collection: https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=PMAT-01HWFE7107BW8K0Q817C3CKD9P
   build-and-push-on-dockerhub:
     needs: mongodb-tornado-newman
+    name: Build and push official image on DockerHub
     runs-on: ubuntu-latest
     steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Login to Docker Hub
