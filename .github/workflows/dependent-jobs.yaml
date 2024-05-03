@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: matt-ball/newman-action@master
         with:
-          collection: https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=PMAT-01HWFE7107BW8K0Q817C3CKD9P
+          collection: https://api.postman.com/collections/718114-8914ed27-a366-4b19-81a3-1a5cf443d5c0?access_key=${{ secrets.POSTMAN_API_KEY }}
   build-and-push-on-dockerhub:
     needs: mongodb-tornado-newman
     name: Build and push official image on DockerHub
