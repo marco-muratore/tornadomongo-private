@@ -1,0 +1,49 @@
+job "tornadomongo-job" {
+  datacenters = ["dc1"]
+  type        = "service"
+
+  group "tornadomongo" {
+    count = 1
+
+    network {
+      mode = "host"
+      port "tornadomongo-port" {
+        to     = 9000
+        static = 9000
+      }
+      port "mongo-port" {
+        to     = 27017
+        static = 27017
+      }
+    }
+
+    task "tornadomongo-task" {
+      driver = "docker"
+      env {
+        URI = "mongodb://root:example@127.0.0.1:27017/"
+        # URI='mongodb://root:example@mongo:27017/'
+      }
+
+      config {
+        network_mode = "host"
+        image        = "mialliedo/tornadomongo-private:1.0.2"
+        ports        = ["tornadomongo-port"]
+      }      
+    }
+
+
+    task "mongo-task" {
+      driver = "docker"
+      env {
+        MONGO_INITDB_ROOT_USERNAME = "root"
+        MONGO_INITDB_ROOT_PASSWORD = "example"
+      }
+
+      config {
+        network_mode = "host"
+        image        = "mongo:7"
+        ports        = ["mongo-port"]
+      }      
+    }
+  }
+}
