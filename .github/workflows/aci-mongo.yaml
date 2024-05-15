@@ -24,4 +24,4 @@ jobs:
             name: aci-mongo
             location: 'west us'
             ports: 27017
-            # trying to overcome the error Error: The DNS name label '***9' in container group 'aci-mongo' not available. Try using a different label.
+            # trying to overcome the Error: The DNS name label '***9' in container group 'aci-mongo' not available. Try using a different label.
