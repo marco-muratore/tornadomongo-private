@@ -123,7 +123,7 @@ async def main():
         (r"/environment", TornadoHandler, dict(checker=envdump),
         (r"/(?P<student_id>\w+)", MainHandler))
     ], db=db, autoreload=True)
-    application.listen(9000)
+    application.listen(80)
     logger.info("Server running ..")
     await asyncio.Event().wait()
 

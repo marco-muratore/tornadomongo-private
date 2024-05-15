@@ -1,6 +1,6 @@
 FROM --platform=linux/amd64 python:3.9
 
-EXPOSE 9000/tcp
+EXPOSE 80/tcp
 
 RUN apt-get update && apt-get install -y \
     build-essential \
