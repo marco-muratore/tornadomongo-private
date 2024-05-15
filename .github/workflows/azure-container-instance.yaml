@@ -45,7 +45,7 @@ jobs:
             registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
             registry-username: ${{ secrets.REGISTRY_USERNAME }}
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-            name: aci-mongo
+            name: aci-tornadostudents
             location: 'west us'
             ports: 27017
             # trying to overcome the error Error: The DNS name label '***9' in container group 'aci-mongo' not available. Try using a different label.
