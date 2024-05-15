@@ -35,3 +35,4 @@ jobs:
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
             name: aci-tornadostudents
             location: 'west us'
+            ports: 9000
