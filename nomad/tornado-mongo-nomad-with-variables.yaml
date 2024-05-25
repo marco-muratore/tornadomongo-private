@@ -1,0 +1,75 @@
+job "tornadomongo-job" {
+  datacenters = ["dc1"]
+  type        = "service"
+
+  group "tornadomongo" {
+    count = 1
+
+    network {
+      mode = "host"
+      port "tornadomongo-port" {
+        to     = 9000
+        static = 9000
+      }
+      port "mongo-port" {
+        to     = 27017
+        static = 27017
+      }
+    }
+
+    task "tornadomongo-task" {
+      driver = "docker"
+      template {
+        destination = "${NOMAD_SECRETS_DIR}/env.vars"
+        env         = true
+        data        = <<EOF
+{{- with nomadVar "nomad/jobs/tornadomongo-job" -}}
+DOCKERHUB_USER = {{.DOCKERHUB_USERNAME}}
+DOCKERHUB_PASSW = {{.DOCKERHUB_PASSWORD}}
+MONGO_USERNAME = {{.MONGO_INITDB_ROOT_USERNAME}}
+MONGO_PASSWORD = {{.MONGO_INITDB_ROOT_PASSWORD}}
+{{- end -}}
+EOF
+      }
+      env {
+        URI = "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@127.0.0.1:27017/"
+        # URI='mongodb://root:example@mongo:27017/'
+      }
+
+      config {
+        network_mode = "host"
+        image        = "mialliedo/tornadomongo-private:1.0.3"  
+        auth {
+          username = "${DOCKERHUB_USER}"
+          password = "${DOCKERHUB_PASSW}"
+        }
+        ports        = ["tornadomongo-port"]
+      }      
+    }
+
+
+    task "mongo-task" {
+      driver = "docker"
+      template {
+        destination = "${NOMAD_SECRETS_DIR}/env.vars"
+        env         = true
+        data        = <<EOF
+{{- with nomadVar "nomad/jobs/tornadomongo-job" -}}
+MONGO_USERNAME = {{.MONGO_INITDB_ROOT_USERNAME}}
+MONGO_PASSWORD = {{.MONGO_INITDB_ROOT_PASSWORD}}
+{{- end -}}
+EOF
+      }
+      env {
+        MONGO_INITDB_ROOT_USERNAME = "${MONGO_USERNAME}"
+        MONGO_INITDB_ROOT_PASSWORD = "${MONGO_PASSWORD}"
+      }
+
+      config {
+        network_mode = "host"
+        image        = "mongo:7"
+        ports        = ["mongo-port"]
+      }      
+    }
+  }
+}
